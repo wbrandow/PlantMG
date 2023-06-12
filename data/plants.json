@@ -1,0 +1,11 @@
+[
+    {
+        "name": "Pothos",
+        "latinName":"Epipremnum aureum",
+        "image": "pothos.jpg",
+        "nativeHabitat": "Understory of tropical rainforests",
+        "type": "climbing vine",
+        "water": "Allow soil to dry between waterings. Water thouroghly until water drains out of pot. Ensure proper drainage.",
+        "light": "Bright, indirect sunlight is best. Pothos will tolerate low light but their growth will slow and their variegation may become less prominent." 
+    }
+]
