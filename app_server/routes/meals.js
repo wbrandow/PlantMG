@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-const ctrlPlants = require('../controllers/plants');
+const ctrlMeals = require('../controllers/meals');
 
 /* GET home page. */
-router.get('/', ctrlPlants.plants);
+router.get('/', ctrlMeals.meals);
 
 module.exports = router;

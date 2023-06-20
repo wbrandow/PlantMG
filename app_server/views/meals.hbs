@@ -1,6 +1,6 @@
 <head>
     <meta charset="UTF-8">
-    <title>{{title}} - Plants</title>
+    <title>{{title}} - Meals</title>
     <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 <body>
@@ -8,17 +8,12 @@
         <div id="page">
             {{> header}}
             <div id="contents">
-                <h1>Plants</h1>
-                <ul id="plants">
-                    {{#each plantList}}
+                <h1>Meals</h1>
+                <ul id="meals">
+                    {{#each mealList}}
                         <li>
                             <h2>{{this.name}}</h2>
-                            <h3>{{this.latinName}}</h3>
                             <img src="images/{{this.image}}" alt="Img" height="150" width="200">
-                            <div class="info">
-                                <p><strong>Water: </strong>{{this.water}}</p>
-                                <p><strong>Light: </strong>{{this.light}}</p>
-                            </div>
                         </li>
                     {{/each}}    
                 </ul>
