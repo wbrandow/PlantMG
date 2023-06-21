@@ -2,6 +2,8 @@
     "1": {
         "code": "meal1",
         "name": "Classic Meatballs",
+        "description": "These meatballs are the best and so easy to make!",
+        "chef": "Joe Bob",
         "image": "meatballs.jpg",
         "rating": 5,
         "ingredients": [
@@ -108,17 +110,17 @@
                 "image": ""
             },
             {
-                "code": "direction¶",
+                "code": "direction7",
                 "instruction": "In the same skillet, pour in the marinara sauce and bring to a simmer.",
                 "image": ""
             },
             {
-                "code": "direction7",
+                "code": "direction8",
                 "instruction": "Add the cooked meatballs to the sauce and simmer for an additional 10 minutes, or until the meatballs are cooked through.",
                 "image": ""
             },
             {
-                "code": "direction8",
+                "code": "direction9",
                 "instruction": "Serve the meatballs with the marinara sauce over pasta or as desired.",
                 "image": ""
             }

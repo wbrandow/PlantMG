@@ -3,11 +3,14 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const hbs = require('hbs');
+require('./app_api/models/db');
 
 const indexRouter = require('./app_server/routes/index');
 const usersRouter = require('./app_server/routes/users');
 const mealRouter = require('./app_server/routes/meals');
-const hbs = require('hbs');
+const apiRouter = require('./app_api/routes/index');
+
 
 var app = express();
 
@@ -23,9 +26,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// allow CORS
+app.use('/api', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/meals', mealRouter);
+app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
