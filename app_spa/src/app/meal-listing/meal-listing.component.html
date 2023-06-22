@@ -1,3 +1,6 @@
+<div>
+  <button (click)="addMeal()" class="btn btn-info">New Recipe</button>
+</div>
 <div class="row">
   <div *ngFor="let meal of meals">
     <app-meal-card [meal]="meal" class="card-dect mt-2"></app-meal-card>

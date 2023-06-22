@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MealDataService } from 'services/meal-data.service';
 import { Meal } from 'models/meal';
 
@@ -15,8 +16,13 @@ export class MealListingComponent implements OnInit {
   message: string;
 
   constructor(
-    private mealDataService: MealDataService
+    private mealDataService: MealDataService,
+    private router: Router
   ) { }
+
+  private addMeal(): void {
+    this.router.navigate(['add-meal']);
+  }
 
   private getMeals(): void {
     console.log('Inside MealListingComponent#getMeals');
