@@ -1,3 +1,106 @@
-<p>
-  add-meal works!
-</p>
+<div class="col-md-3">
+  <h2 class="text-center">Add Meal</h2>
+  <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Code input -->
+    <div class="form-group">
+      <label>Code:</label>
+      <input type="text" formControlName="code" placeholder="Code" 
+        class="form-control" [ngClass]="{ 'is-invalid': submitted && f.code.errors }">
+      <div *ngIf="submitted && f.code.errors">
+        <div *ngIf="f.code.errors.required">
+          Meal Code is required
+        </div>
+      </div>
+    </div>
+
+    <!-- Name input -->
+    <div class="form-group">
+      <label>Meal Name:</label>
+      <input type="text" formControlName="name" placeholder="Meal Name" 
+        class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+      <div *ngIf="submitted && f.name.errors">
+        <div *ngIf="f.name.errors.required">
+          Meal Name is required
+        </div>
+      </div>
+    </div>
+
+    <!-- Description input -->
+    <div class="form-group">
+      <label>Description:</label>
+      <input type="text" formControlName="description" placeholder="Description" 
+        class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }">
+      <div *ngIf="submitted && f.description.errors">
+        <div *ngIf="f.description.errors.required">
+          Meal Description is required
+        </div>
+      </div>
+    </div>
+
+    <!-- Chef input -->
+    <div class="form-group">
+      <label>Chef:</label>
+      <input type="text" formControlName="chef" placeholder="Chef" 
+        class="form-control" [ngClass]="{ 'is-invalid': submitted && f.chef.errors }">
+      <div *ngIf="submitted && f.chef.errors">
+        <div *ngIf="f.chef.errors.required">
+          Chef name is required
+        </div>
+      </div>
+    </div>
+
+    <!-- Image input -->
+    <div class="form-group">
+      <label>Image:</label>
+      <input type="text" formControlName="image" placeholder="Image" 
+        class="form-control" [ngClass]="{ 'is-invalid': submitted && f.image.errors }">
+      <div *ngIf="submitted && f.image.errors">
+        <div *ngIf="f.image.errors.required">
+          Meal Image is required
+        </div>
+      </div>
+    </div>
+
+<!-- FIXME: Rating input should be radio type -->    
+    <!-- Rating input -->
+    <div class="form-group">
+      <label>Rating:</label>
+      <input type="text" formControlName="rating" placeholder="Rating" 
+        class="form-control" [ngClass]="{ 'is-invalid': submitted && f.rating.errors }">
+      <div *ngIf="submitted && f.rating.errors">
+        <div *ngIf="f.rating.errors.required">
+          Meal Rating is required
+        </div>
+      </div>
+    </div>
+
+    
+    <div id="ingredientsContainer">
+      <h3>Ingredients</h3>
+      <div class="ingredient">
+        <h5>Ingredient 1</h5>
+        <input type="text" name="code[]" placeholder="Ingredient Code 1">
+        <input type="text" name="name[]" placeholder="Ingredient Name 1">
+        <input type="text" name="amount[]" placeholder="Amount 1">
+        <input type="text" name="measurementUnit[]" placeholder="Measurement Unit 1">
+        <input type="text" name="detail[]" placeholder="Detail 1">
+      </div>
+    </div>
+    <button type="button" (click)="addIngredient()">Add Ingredient</button>
+
+<!-- FIXME: image input should be file type -->   
+    <div id="directionsContainer">
+      <h3>Directions</h3>
+      <div class="direction">
+        <h5>Instruction 1</h5>
+        <input type="text" name="code[]" placeholder="Direction Code 1">
+        <input type="text" name="instruction[]" placeholder="Instruction 1">
+        <input type="text" name="image[]" placeholder="Image 1">
+      </div>
+    </div>
+    <button type="button" (click)="addDirection()">Add Direction</button>
+
+    
+  </form>
+</div>
