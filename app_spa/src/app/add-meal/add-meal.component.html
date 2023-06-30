@@ -1,18 +1,6 @@
 <div class="col-md-3">
   <h2 class="text-center">Add Meal</h2>
-  <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
-    
-    <!-- Code input -->
-    <div class="form-group">
-      <label>Code:</label>
-      <input type="text" formControlName="code" placeholder="Code" 
-        class="form-control" [ngClass]="{ 'is-invalid': submitted && f.code.errors }">
-      <div *ngIf="submitted && f.code.errors">
-        <div *ngIf="f.code.errors.required">
-          Meal Code is required
-        </div>
-      </div>
-    </div>
+  <form [formGroup]="addForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
 
     <!-- Name input -->
     <div class="form-group">
@@ -53,8 +41,7 @@
     <!-- Image input -->
     <div class="form-group">
       <label>Image:</label>
-      <input type="text" formControlName="image" placeholder="Image" 
-        class="form-control" [ngClass]="{ 'is-invalid': submitted && f.image.errors }">
+      <input type="file" formControlName="image" class="form-control" accept="image/jpeg, image/jpg, image/png">
       <div *ngIf="submitted && f.image.errors">
         <div *ngIf="f.image.errors.required">
           Meal Image is required
@@ -62,45 +49,75 @@
       </div>
     </div>
 
-<!-- FIXME: Rating input should be radio type -->    
-    <!-- Rating input -->
+
+<!-- Rating Input
     <div class="form-group">
       <label>Rating:</label>
-      <input type="text" formControlName="rating" placeholder="Rating" 
-        class="form-control" [ngClass]="{ 'is-invalid': submitted && f.rating.errors }">
+      <div class="row">
+        <div class="col">
+          <input type="radio" id="rating1" name="ratingGroup" formControlName="rating" value="1" class="form-control">
+          <label for="rating1">1</label>
+        </div>
+        <div class="col">
+          <input type="radio" id="rating2" name="ratingGroup" formControlName="rating" value="2" class="form-control">
+          <label for="rating2">2</label>
+        </div>
+        <div class="col">
+          <input type="radio" id="rating3" name="ratingGroup" formControlName="rating" value="3" class="form-control">
+          <label for="rating3">3</label>
+        </div>
+        <div class="col">
+          <input type="radio" id="rating4" name="ratingGroup" formControlName="rating" value="4" class="form-control">
+          <label for="rating4">4</label>
+        </div>
+        <div class="col">
+          <input type="radio" id="rating5" name="ratingGroup" formControlName="rating" value="5" class="form-control">
+          <label for="rating5">5</label>
+        </div>
+      </div>
       <div *ngIf="submitted && f.rating.errors">
         <div *ngIf="f.rating.errors.required">
           Meal Rating is required
         </div>
       </div>
     </div>
+  -->  
 
     
     <div id="ingredientsContainer">
       <h3>Ingredients</h3>
-      <div class="ingredient">
-        <h5>Ingredient 1</h5>
-        <input type="text" name="code[]" placeholder="Ingredient Code 1">
-        <input type="text" name="name[]" placeholder="Ingredient Name 1">
-        <input type="text" name="amount[]" placeholder="Amount 1">
-        <input type="text" name="measurementUnit[]" placeholder="Measurement Unit 1">
-        <input type="text" name="detail[]" placeholder="Detail 1">
+      <div class="form-group" formArrayName="ingredients">
+        <div *ngFor="let ingredientGroup of ingredientControls.controls; let i = index" [formGroupName]="i">
+          <h5>Ingredient</h5>
+          <input type="text" formControlName="name" placeholder="Ingredient Name" class="form-control">
+          <input type="text" formControlName="amount" placeholder="Amount" class="form-control">
+          <input type="text" formControlName="measurementUnit" placeholder="Measurement Unit" class="form-control">
+          <input type="text" formControlName="detail" placeholder="Detail" class="form-control">
+          <button type="button" (click)="removeIngredient(i)">Delete</button>
+        </div>
       </div>
     </div>
-    <button type="button" (click)="addIngredient()">Add Ingredient</button>
+    <button type="button" (click)="newIngredient()">Add Ingredient</button>
 
-<!-- FIXME: image input should be file type -->   
+ 
     <div id="directionsContainer">
       <h3>Directions</h3>
-      <div class="direction">
-        <h5>Instruction 1</h5>
-        <input type="text" name="code[]" placeholder="Direction Code 1">
-        <input type="text" name="instruction[]" placeholder="Instruction 1">
-        <input type="text" name="image[]" placeholder="Image 1">
+      <div class="form-group" formArrayName="directions">
+        <div *ngFor="let directionGroup of directionControls.controls; let i = index" [formGroupName]="i">
+          <h5>Instruction</h5>
+          <input type="text" formControlName="instruction" placeholder="Instruction" class="form-control">
+          <input type="file" formControlName="image" class="form-control" accept="image/jpeg, image/jpg, image/png">
+          <label for="image[]">Choose Image File</label>
+          <div>
+            <button type="button" (click)="removeDirection(i)">Delete</button>
+          </div>
+        </div>  
       </div>
     </div>
-    <button type="button" (click)="addDirection()">Add Direction</button>
+    <button type="button" (click)="newDirection()">Add Direction</button>
 
-    
+    <div>
+      <button type="submit" class="btn btn-info">Save</button>
+    </div>
   </form>
 </div>

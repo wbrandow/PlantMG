@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { MealDataService } from 'services/meal-data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-meal',
@@ -7,95 +10,76 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddMealComponent implements OnInit {
 
-  ingredientCounter: number = 1;
-  directionCounter: number = 1;
+  addForm: FormGroup;
+  submitted = false;
 
   constructor(
+    private formBuilder: FormBuilder,
+    private mealDataService: MealDataService,
+    private router: Router
   ) { }
 
   ngOnInit() {
+    this.addForm = this.formBuilder.group({
+      _id: [],
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      chef: ['', Validators.required],
+      image: [null, Validators.required],
+      ingredients: this.formBuilder.array([]),
+      directions: this.formBuilder.array([])
+    });
   }
 
-  private addIngredient(): void {
-
-    const container = document.getElementById("ingredientsContainer");
-
-    const newIngredientDiv = document.createElement("div");
-    newIngredientDiv.className = "ingredient";
-
-    const ingredientHeader = document.createElement("h5");
-    ingredientHeader.innerText = "Ingredient " + (this.ingredientCounter + 1);
-
-    const codeInput = document.createElement("input");
-    codeInput.type = "text";
-    codeInput.name = "code[]";
-    codeInput.placeholder = "Code " + (this.ingredientCounter + 1);
-
-    const nameInput = document.createElement("input");
-    nameInput.type = "text";
-    nameInput.name = "name[]";
-    nameInput.placeholder = "Name " + (this.ingredientCounter + 1);
-
-    const amountInput = document.createElement("input");
-    amountInput.type = "text";
-    amountInput.name = "amount[]";
-    amountInput.placeholder = "Amount " + (this.ingredientCounter + 1);
-
-    const measurementUnitInput = document.createElement("input");
-    measurementUnitInput.type = "text";
-    measurementUnitInput.name = "measurementUnit[]";
-    measurementUnitInput.placeholder = "Measurement Unit " + (this.ingredientCounter + 1);
-
-    const detailInput = document.createElement("input");
-    detailInput.type = "text";
-    detailInput.name = "detail[]";
-    detailInput.placeholder = "Detail " + (this.ingredientCounter + 1);
-
-    newIngredientDiv.appendChild(ingredientHeader);
-    newIngredientDiv.appendChild(codeInput);
-    newIngredientDiv.appendChild(nameInput);
-    newIngredientDiv.appendChild(amountInput);
-    newIngredientDiv.appendChild(measurementUnitInput);
-    newIngredientDiv.appendChild(detailInput);
-
-    container.appendChild(newIngredientDiv);
-
-    this.ingredientCounter++;
+  get ingredientControls() {
+    return this.addForm.get('ingredients') as FormArray;
   }
 
-  private addDirection(): void {
-
-    const container = document.getElementById("directionsContainer");
-
-    const newDirectionDiv = document.createElement("div");
-    newDirectionDiv.className = "direction";
-
-    const directionHeader = document.createElement("h5");
-    directionHeader.innerText = "Instruction " + (this.directionCounter + 1);
-
-    const codeInput = document.createElement("input");
-    codeInput.type = "text";
-    codeInput.name = "code[]";
-    codeInput.placeholder = "Code " + (this.directionCounter + 1);
-
-    const instructionInput = document.createElement("input");
-    instructionInput.type = "text";
-    instructionInput.name = "instruction[]";
-    instructionInput.placeholder = "Instruction " + (this.directionCounter + 1);
-
-// FIXME: image input should be file type      
-    const imageInput = document.createElement("input");
-    imageInput.type = "text";
-    imageInput.name = "image[]";
-    imageInput.placeholder = "Image " + (this.directionCounter + 1);
-
-    newDirectionDiv.appendChild(directionHeader);
-    newDirectionDiv.appendChild(codeInput);
-    newDirectionDiv.appendChild(instructionInput);
-    newDirectionDiv.appendChild(imageInput);
-
-    container.appendChild(newDirectionDiv);
-
-    this.directionCounter++;
+  removeIngredient(index: number): void {
+    this.ingredientControls.removeAt(index);
   }
+
+  private newIngredient(): void {
+
+    const ingredientGroup = this.formBuilder.group({
+      name: ['', Validators.required],
+      amount: ['', Validators.required],
+      measurementUnit: ['', Validators.required],
+      detail: ['', Validators.required]
+    });
+
+    this.ingredientControls.push(ingredientGroup);
+  }
+
+  get directionControls() {
+    return this.addForm.get('directions') as FormArray;
+  }
+
+  removeDirection(index: number): void {
+    this.directionControls.removeAt(index);
+  }
+
+  private newDirection(): void {
+
+    const directionGroup = this.formBuilder.group({
+      instruction: ['', Validators.required],
+      image: ['', Validators.required]
+    });
+
+    this.directionControls.push(directionGroup);
+  }
+
+  onSubmit() {
+    this.submitted = true;
+    if (this.addForm.valid) {
+      this.mealDataService.addMeal(this.addForm.value)
+        .then(data => {
+          console.log(data);
+          this.router.navigate(['']);
+        });
+    }
+  }
+
+  // get the form shart name to acces the form fields
+  get f() { return this.addForm.controls; }
 }

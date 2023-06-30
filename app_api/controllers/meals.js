@@ -47,7 +47,35 @@ const mealsFindByCode = async (req, res) => {
         });
 };
 
+const mealsAddMeal = async (req, res) => {
+    console.log('Inside mealsController#mealsAddMeal');
+
+    Meal
+        .create({
+            name: req.body.name,
+            description: req.body.description,
+            chef: req.body.chef,
+            image: req.body.image,
+            rating: '0',
+            ingredients: req.body.ingredients,
+            directions: req.body.directions
+        },
+        (err, meal) => {
+            if (err) {
+                return res
+                    .status(400)  // bad request, invalid content
+                    .json(err);
+            }
+            else {
+                return res
+                    .status(201)  // created
+                    .json(meal);
+            }
+        });
+};
+
 module.exports = {
     mealsList,
-    mealsFindByCode
+    mealsFindByCode,
+    mealsAddMeal
 };

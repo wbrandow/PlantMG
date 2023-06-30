@@ -5,7 +5,8 @@ const mealsController = require('../controllers/meals');
 
 router
     .route('/meals')
-    .get(mealsController.mealsList);
+    .get(mealsController.mealsList)
+    .post(mealsController.mealsAddMeal);
 
 router
     .route('/meals/:mealCode')
